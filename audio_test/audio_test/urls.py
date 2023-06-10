@@ -16,13 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main.views import audio_test, choose_audio
+from main.views import audio_test, choose_audio , serve_audio
 
 
 urlpatterns = [
-
     path('', choose_audio, name='choose_audio'),
     path('audio_test/<int:pk>/', audio_test, name='audio_test'),
+    path('serve_audio/<path:filename>', serve_audio, name='serve_audio'),
     path('admin/', admin.site.urls),
-
 ]

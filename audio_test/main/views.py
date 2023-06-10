@@ -1,8 +1,16 @@
 from django.shortcuts import render
-
 from django.http import HttpResponse, StreamingHttpResponse
 import os
 from django.conf import settings
+from wsgiref.util import FileWrapper as WSGIFileWrapper
+
+def serve_audio(request, filename):
+    filepath = os.path.join('main/static', filename)
+    wrapper = WSGIFileWrapper(open(filepath, 'rb'))
+    response = HttpResponse(wrapper, content_type='audio/mpeg')
+    response['Content-Length'] = os.path.getsize(filepath)
+    response['Accept-Ranges'] = 'bytes'
+    return response
 
 
 def choose_audio(request):
